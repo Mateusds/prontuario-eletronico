@@ -1,0 +1,49 @@
+-- SQL PARA CONSULTAR OS USUARIOS
+SELECT  * FROM usuarios u 
+
+-- Buscar um usuário específico pelo ID
+SELECT * FROM usuarios u WHERE id = 3;
+
+-- Selecionar apenas algumas colunas
+SELECT nome, email FROM usuarios u ;
+
+-- Buscar usuários com um nome específico
+SELECT * FROM usuarios WHERE nome = 'medico';
+
+-- Ordenar os resultados por nome
+SELECT * FROM usuarios u ORDER BY nome ASC;
+
+-- Contar quantos usuários existem
+SELECT COUNT(*) FROM usuarios u ;
+
+
+
+-- Selecionar os 10 usuários mais recentes
+SELECT * FROM usuarios u ORDER BY data_cadastro DESC LIMIT 10;
+
+-- Contar usuários ativos e inativos
+SELECT status, COUNT(*) AS quantidade 
+FROM usuarios 
+GROUP BY status;
+
+-- Buscar usuários que ainda não atualizaram seus dados nos últimos 6 meses
+SELECT * FROM usuarios 
+WHERE DATEDIFF(NOW(), ultima_atualizacao) > 180;
+
+-- Listar os usuários com mais de 30 anos
+SELECT * FROM usuarios 
+WHERE TIMESTAMPDIFF(YEAR, data_nascimento, CURDATE()) > 30;
+
+-- Encontrar usuários que têm nomes duplicados
+SELECT nome, COUNT(*) AS repeticoes 
+FROM usuarios 
+GROUP BY nome 
+HAVING COUNT(*) > 1;
+
+-- Buscar os 5 usuários que mais acessaram o sistema
+SELECT u.id, u.nome, COUNT(a.id) AS total_acessos 
+FROM usuarios u 
+JOIN acessos a ON u.id = a.usuario_id 
+GROUP BY u.id, u.nome 
+ORDER BY total_acessos DESC 
+LIMIT 5;

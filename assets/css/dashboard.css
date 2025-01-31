@@ -1,0 +1,274 @@
+/* Estilos gerais para o container principal */
+.main-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Estilos para a barra lateral */
+.sidebar {
+    width: 250px;
+    background: #2c3e50;
+    color: white;
+    padding: 20px;
+}
+
+.sidebar h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar li {
+    margin: 15px 0;
+}
+
+.sidebar a {
+    color: white;
+    text-decoration: none;
+    display: block;
+    padding: 10px;
+    border-radius: 4px;
+    transition: background 0.3s;
+}
+
+.sidebar a:hover {
+    background: #34495e;
+}
+
+.sidebar a i {
+    margin-right: 10px;
+    width: 20px;
+    text-align: center;
+}
+
+/* Estilos para o conteúdo principal */
+.content {
+    flex: 1;
+    padding: 20px;
+    background-color: #f4f4f4;
+}
+
+/* Estilos para cards de informações */
+.patient-info {
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.patient-info h3 {
+    margin-top: 0;
+    color: #2c3e50;
+}
+
+.patient-info p {
+    margin: 5px 0;
+    color: #34495e;
+}
+
+/* Estilos para alertas */
+.alert {
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+}
+
+.alert.success {
+    background: #d4edda;
+    color: #155724;
+}
+
+.alert.error {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.alert.warning {
+    background: #fff3cd;
+    color: #856404;
+}
+
+/* Estilos para listas de consultas */
+.consultas-list {
+    display: grid;
+    gap: 20px;
+}
+
+.consulta-card {
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.consulta-card h4 {
+    margin-top: 0;
+    color: #2c3e50;
+}
+
+.consulta-card p {
+    margin: 5px 0;
+    color: #34495e;
+}
+
+.consulta-card a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.consulta-card a:hover {
+    text-decoration: underline;
+}
+
+/* Estilos para a fila de atendimento */
+.fila-atendimento {
+    display: grid;
+    gap: 15px;
+}
+
+.paciente-card {
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.paciente-card h4 {
+    margin: 0;
+    color: #2c3e50;
+}
+
+.paciente-card p {
+    margin: 5px 0;
+    color: #34495e;
+}
+
+/* Estilos para botões */
+.btn-primary {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.btn-primary:hover {
+    background: #0056b3;
+}
+
+.btn-secondary {
+    background: #6c757d;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.btn-secondary:hover {
+    background: #5a6268;
+}
+
+/* Estilos para formulários no dashboard */
+.dashboard-form {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background: white;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-form .form-group {
+    margin-bottom: 15px;
+}
+
+.dashboard-form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+.dashboard-form input[type="text"],
+.dashboard-form input[type="email"],
+.dashboard-form input[type="password"],
+.dashboard-form select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.dashboard-form button {
+    width: 100%;
+    padding: 10px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.dashboard-form button:hover {
+    background: #0056b3;
+}
+
+/* Estilos para gráficos (se houver) */
+.chart-container {
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.chart-container h3 {
+    margin-top: 0;
+    color: #2c3e50;
+}
+
+/* Estilos para tabelas */
+.table-container {
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.table-container table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table-container th,
+.table-container td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.table-container th {
+    background: #f8f9fa;
+    color: #2c3e50;
+    font-weight: 600;
+}
+
+.table-container tr:hover {
+    background: #f1f1f1;
+} 

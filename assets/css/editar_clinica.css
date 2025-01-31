@@ -1,0 +1,196 @@
+.editar-clinica-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 30px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.editar-clinica-container h1 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 30px;
+    font-size: 28px;
+    font-weight: 600;
+    position: relative;
+}
+
+.editar-clinica-container h1::after {
+    content: '';
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(90deg, #28a745, #007bff);
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 2px;
+}
+
+.editar-clinica-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.editar-clinica-form .form-group {
+    margin-bottom: 20px;
+}
+
+.editar-clinica-form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #34495e;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.editar-clinica-form input[type="text"],
+.editar-clinica-form input[type="time"] {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    background-color: #f8f9fa;
+    color: #495057;
+}
+
+.editar-clinica-form input[type="text"]:focus,
+.editar-clinica-form input[type="time"]:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+    background-color: white;
+}
+
+.editar-clinica-form button[type="submit"] {
+    width: 150px;
+    padding: 10px 15px;
+    font-size: 14px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: block;
+    margin: 0 auto;
+}
+
+.editar-clinica-form button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+.editar-clinica-form button[type="submit"]:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.horario-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.dia-horario {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+}
+
+.dia-checkbox {
+    margin-bottom: 10px;
+}
+
+.dia-checkbox label {
+    font-weight: 600;
+    color: #2c3e50;
+    font-size: 16px;
+}
+
+.horario-inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    align-items: center;
+    width: fit-content;
+}
+
+.horario-separador {
+    color: #6c757d;
+    font-size: 14px;
+    margin: 0;
+    text-align: center;
+    width: 100%;
+}
+
+.modern-input {
+    position: relative;
+    width: 150px;
+}
+
+.modern-input input[type="time"] {
+    width: 100%;
+    padding: 8px 12px 8px 30px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 14px;
+    background-color: #f8f9fa;
+    color: #495057;
+    transition: all 0.3s ease;
+}
+
+.modern-input input[type="time"]:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+    background-color: white;
+}
+
+.modern-input .input-icon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #6c757d;
+    pointer-events: none;
+}
+
+@media (max-width: 768px) {
+    .horario-container {
+        grid-template-columns: 1fr;
+    }
+
+    .editar-clinica-container {
+        margin: 20px;
+        padding: 20px;
+    }
+
+    .editar-clinica-container h1 {
+        font-size: 24px;
+    }
+}
+
+@media (max-width: 480px) {
+    .editar-clinica-container {
+        margin: 10px;
+        padding: 15px;
+    }
+
+    .editar-clinica-form input[type="text"],
+    .editar-clinica-form input[type="time"] {
+        padding: 10px;
+    }
+
+    .editar-clinica-form button[type="submit"] {
+        padding: 12px 20px;
+        font-size: 14px;
+    }
+} 
