@@ -4,7 +4,7 @@ $current_path = $_SERVER['PHP_SELF'];
 ?>
 
 <aside class="sidebar">
-    <h2>PRONTUÁRIO ELETRÔNICO</h2>
+    <h2>PRONTUÁRIO ELETRÔNICOo</h2>
     <ul>
         <?php if ($_SESSION['user_type'] == 'admin'): ?>
             <li>
