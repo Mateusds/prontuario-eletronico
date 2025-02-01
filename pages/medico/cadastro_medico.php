@@ -54,8 +54,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $(this).val($(this).val().toUpperCase());
             });
 
+            // Função para exibir o modal
+            function showStatusModal(message) {
+                $('#statusMessage').text(message);
+                $('#statusModal').fadeIn();
+
+                // Fechar o modal após 5 segundos
+                setTimeout(function() {
+                    $('#statusModal').fadeOut();
+                }, 5000);
+            }
+
             $('.toggle-status').change(function() {
-                var toggle = $(this); // Armazena a referência do botão
+                var toggle = $(this);
                 var medicoId = toggle.data('id');
                 var situacao = toggle.is(':checked') ? 1 : 0;
 
@@ -66,8 +77,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     dataType: 'json',
                     success: function(response) {
                         if (response && response.success) {
-                            alert(response.message || 'Status atualizado com sucesso!');
-                            // Não recarrega a página, apenas atualiza o estado do botão
+                            var message = situacao == 1 ? 'Status atualizado para ativo com sucesso!' : 'Status atualizado para desativado com sucesso!';
+                            showStatusModal(message);
                         } else {
                             alert(response.message || 'Erro ao atualizar status');
                             toggle.prop('checked', !toggle.prop('checked')); // Reverte o estado do botão em caso de erro
@@ -86,6 +97,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <div class="main-container">
         <?php include '../../includes/menu_lateral.php'; ?>
         
+        <!-- Modal de Status -->
+        <div id="statusModal" class="modal">
+            <div class="modal-content">
+                <span id="statusMessage"></span>
+            </div>
+        </div>
+
         <main class="content">
             <h1>Cadastro de Médico</h1>
             
