@@ -4,7 +4,7 @@ $current_path = $_SERVER['PHP_SELF'];
 ?>
 
 <aside class="sidebar">
-    <h2>PRONTUÁRIO ELETRÔNICOo</h2>
+    <h2>PRONTUÁRIO ELETRÔNICO</h2>
     <ul>
         <?php if ($_SESSION['user_type'] == 'admin'): ?>
             <li>
@@ -18,8 +18,13 @@ $current_path = $_SERVER['PHP_SELF'];
                 </a>
             </li>
             <li>
-                <a href="relatorios.php" class="<?= (strpos($current_path, 'relatorios.php') !== false) ? 'active' : '' ?>">
-                    <i class="fas fa-chart-line"></i> Relatórios
+                <a href="../medico/cadastro_medico.php" class="<?= (strpos($current_path, 'medico/cadastro_medico.php') !== false) ? 'active' : '' ?>">
+                    <i class="fas fa-user-plus"></i> Cadastrar Médico
+                </a>
+            </li>
+            <li>
+                <a href="../admin/relatorios.php" class="<?= (strpos($current_path, 'admin/relatorios.php') !== false) ? 'active' : '' ?>">
+                    <i class="fas fa-chart-bar"></i> Relatórios
                 </a>
             </li>
         <?php endif; ?>
@@ -56,6 +61,11 @@ $current_path = $_SERVER['PHP_SELF'];
         <?php endif; ?>
 
         <?php if ($_SESSION['user_type'] == 'paciente' || $_SESSION['user_type'] == 'admin'): ?>
+            <li>
+                <a href="../paciente/cadastro.php" class="<?= (strpos($current_path, 'paciente/cadastro.php') !== false) ? 'active' : '' ?>">
+                    <i class="fas fa-user-plus"></i> Cadastro de Paciente
+                </a>
+            </li>
             <li>
                 <a href="../paciente/consultas.php" class="<?= (strpos($current_path, 'paciente/consultas.php') !== false) ? 'active' : '' ?>">
                     <i class="fas fa-stethoscope"></i> Consultas de Pacientes

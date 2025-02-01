@@ -2,8 +2,8 @@
 session_start();
 require '../../includes/config.php';
 
-// Verificar se é administrador
-if ($_SESSION['user_type'] != 'admin') {
+// Verificar se é administrador ou médico
+if ($_SESSION['user_type'] != 'admin' && $_SESSION['user_type'] != 'medico') {
     header('Location: ../../pages/login.php');
     exit();
 }

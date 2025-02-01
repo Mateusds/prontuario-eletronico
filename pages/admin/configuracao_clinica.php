@@ -301,6 +301,18 @@ try {
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra suave */
             z-index: 1000; /* Garante que a mensagem fique acima de outros elementos */
         }
+        
+        .clinica-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+        }
+        
+        .clinica-header h3 {
+            margin: 0;
+            flex-grow: 1;
+        }
     </style>
 </head>
 <body>
@@ -378,23 +390,16 @@ try {
                 <?php else: ?>
                     <?php foreach ($clinicas as $clinica): ?>
                         <div class="clinica-card">
-                            <h3><?= htmlspecialchars($clinica['nome']) ?></h3>
-                            <?php
-                            $dias_semana = ['seg', 'ter', 'qua', 'qui', 'sex', 'sab', 'dom'];
-                            foreach ($dias_semana as $dia): 
-                                $horario_abertura = $clinica["horario_abertura_$dia"] ?? null;
-                                $horario_fechamento = $clinica["horario_fechamento_$dia"] ?? null;
-                                if ($horario_abertura && $horario_fechamento && $horario_abertura != '00:00:00' && $horario_fechamento != '00:00:00'): ?>
-                                    <p><strong><?= ucfirst($dia) ?>:</strong> <?= htmlspecialchars($horario_abertura) ?> às <?= htmlspecialchars($horario_fechamento) ?></p>
-                                <?php endif;
-                            endforeach; ?>
-                            <div class="actions">
-                                <a href="editar_clinica.php?id=<?= $clinica['id'] ?>" class="btn-edit">
-                                    <i class="fas fa-edit"></i> Editar
-                                </a>
-                                <a href="excluir_clinica.php?id=<?= $clinica['id'] ?>" class="btn-delete" onclick="return confirm('Tem certeza que deseja excluir esta clínica?')">
-                                    <i class="fas fa-trash"></i> Excluir
-                                </a>
+                            <div class="clinica-header">
+                                <h3><?= htmlspecialchars($clinica['nome']) ?></h3>
+                                <div class="actions">
+                                    <a href="editar_clinica.php?id=<?= $clinica['id'] ?>" class="btn-edit">
+                                        <i class="fas fa-edit"></i> Editar
+                                    </a>
+                                    <a href="excluir_clinica.php?id=<?= $clinica['id'] ?>" class="btn-delete" onclick="return confirm('Tem certeza que deseja excluir esta clínica?')">
+                                        <i class="fas fa-trash"></i> Excluir
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     <?php endforeach; ?>

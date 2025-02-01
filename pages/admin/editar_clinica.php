@@ -133,24 +133,29 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $fechamento = $clinica['horario_fechamento_'.$dia] ?? null;
                 ?>
                     <div class="dia-horario">
-                        <div class="dia-checkbox">
-                            <label><?= $label ?></label>
+                        <div class="dia-header" onclick="toggleHorario('<?= $dia ?>')">
+                            <span><?= $label ?></span>
+                            <span class="seta" id="seta-<?= $dia ?>">▼</span>
                         </div>
-                        <div class="horario-inputs">
-                            <div class="modern-input">
-                                <input type="time" 
-                                       id="<?= $dia ?>_abertura" 
-                                       name="<?= $dia ?>_abertura" 
-                                       value="<?= $abertura ? htmlspecialchars($abertura) : '' ?>">
-                                <span class="input-icon">⏰</span>
-                            </div>
-                            <span class="horario-separador">às</span>
-                            <div class="modern-input">
-                                <input type="time" 
-                                       id="<?= $dia ?>_fechamento" 
-                                       name="<?= $dia ?>_fechamento" 
-                                       value="<?= $fechamento ? htmlspecialchars($fechamento) : '' ?>">
-                                <span class="input-icon">⏰</span>
+                        <div class="horario-content" id="horario-<?= $dia ?>" style="display: none;">
+                            <div class="horario-inputs">
+                                <div class="modern-input">
+                                    <span class="input-icon">⏰</span>
+                                    <input type="time" 
+                                           id="<?= $dia ?>_abertura" 
+                                           name="<?= $dia ?>_abertura" 
+                                           value="<?= $abertura ? htmlspecialchars($abertura) : '' ?>"
+                                           placeholder="Abertura">
+                                </div>
+                                <span class="horario-separador">às</span>
+                                <div class="modern-input">
+                                    <span class="input-icon">⏰</span>
+                                    <input type="time" 
+                                           id="<?= $dia ?>_fechamento" 
+                                           name="<?= $dia ?>_fechamento" 
+                                           value="<?= $fechamento ? htmlspecialchars($fechamento) : '' ?>"
+                                           placeholder="Fechamento">
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -160,5 +165,37 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <button type="submit" class="btn-primary">Salvar Alterações</button>
         </form>
     </div>
+
+    <script>
+    function toggleHorario(dia) {
+        const content = document.getElementById('horario-' + dia);
+        const seta = document.getElementById('seta-' + dia);
+        
+        // Fechar todos os outros horários
+        document.querySelectorAll('.horario-content').forEach(otherContent => {
+            if (otherContent.id !== 'horario-' + dia) {
+                otherContent.style.display = 'none';
+                const otherSeta = document.getElementById('seta-' + otherContent.id.split('-')[1]);
+                if (otherSeta) otherSeta.textContent = '▼';
+            }
+        });
+        
+        // Alternar apenas o horário clicado
+        if (content.style.display === 'none' || content.style.display === '') {
+            content.style.display = 'block';
+            seta.textContent = '▲';
+        } else {
+            content.style.display = 'none';
+            seta.textContent = '▼';
+        }
+    }
+
+    // Esconder todos os horários ao carregar a página
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.horario-content').forEach(content => {
+            content.style.display = 'none';
+        });
+    });
+    </script>
 </body>
 </html> 

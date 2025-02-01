@@ -1,13 +1,14 @@
 <?php
+// Configurações do banco de dados
 $host = 'localhost';
-$db = 'prontuario_eletronico';
-$user = 'root';
-$pass = '';
+$dbname = 'prontuario_eletronico';
+$username = 'root';
+$password = '';
 
 try {
-    $pdo = new PDO("mysql:host=$host;dbname=$db", $user, $pass);
+    $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException $e) {
-    die("Erro na conexão: " . $e->getMessage());
+    die("Erro ao conectar ao banco de dados: " . $e->getMessage());
 }
 ?>
