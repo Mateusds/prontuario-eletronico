@@ -12,6 +12,7 @@ if ($_SESSION['user_type'] != 'admin') {
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $nome_clinica = $_POST['nome_clinica'] ?? '';
     $dias_selecionados = $_POST['dias'] ?? [];
+    $especialidades = $_POST['especialidades'] ?? [];
     
     // Array para armazenar todos os dados
     $dados = [':nome' => $nome_clinica];
@@ -41,15 +42,32 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
     
     try {
+        // Iniciar transação
+        $pdo->beginTransaction();
+        
+        // Inserir clínica
         $sql = "INSERT INTO clinicas (" . implode(', ', $colunas) . ") 
                 VALUES (" . implode(', ', $valores) . ")";
         $stmt = $pdo->prepare($sql);
         $stmt->execute($dados);
         
+        // Obter ID da clínica inserida
+        $clinica_id = $pdo->lastInsertId();
+        
+        // Inserir especialidades
+        $stmt = $pdo->prepare("INSERT INTO clinica_especialidades (clinica_id, especialidade) VALUES (?, ?)");
+        foreach ($especialidades as $especialidade) {
+            $stmt->execute([$clinica_id, $especialidade]);
+        }
+        
+        // Commit da transação
+        $pdo->commit();
+        
         $_SESSION['success'] = "Clínica cadastrada com sucesso!";
         header('Location: configuracao_clinica.php');
         exit();
     } catch (PDOException $e) {
+        $pdo->rollBack();
         $_SESSION['error'] = "Erro ao cadastrar clínica: " . $e->getMessage();
     }
 }
@@ -73,6 +91,19 @@ try {
 } catch (PDOException $e) {
     echo "Erro ao consultar clínicas: " . $e->getMessage();
 }
+
+// Lista de especialidades
+$especialidades_disponiveis = [
+    'Acompanhante Terapêutico',
+    'Fisioterapia',
+    'Fonoaudiologia',
+    'Musicoterapia',
+    'Nutrição',
+    'Psicólogo',
+    'Psicomotricista',
+    'Psicopedagogia',
+    'Terapia Ocupacional'
+];
 ?>
 
 <!DOCTYPE html>
@@ -112,7 +143,7 @@ try {
         }
         
         .horario-content {
-            display: none;
+            display: none; /* Mantém oculto por padrão */
             margin-top: 10px;
             background: #fff;
             border: 1px solid #ddd;
@@ -122,27 +153,38 @@ try {
             width: 100%;
             box-sizing: border-box;
             margin-bottom: 10px;
+            justify-content: center;
+            align-items: center;
         }
         
         .horario-inputs {
             display: flex;
             flex-direction: column;
-            gap: 5px;
-            width: 100%;
+            gap: 8px;
+            align-items: center; /* Centraliza os inputs horizontalmente */
+            justify-content: center; /* Centraliza verticalmente */
+            width: 100%; /* Garante que a div ocupe toda a largura disponível */
         }
         
-        .horario-inputs .modern-input {
-            width: 100%;
+        .horario-inputs input[type="time"] {
+            width: 80%; /* Define uma largura menor para os inputs */
+            padding: 8px; /* Ajusta o padding para melhorar a aparência */
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+            text-align: center; /* Centraliza o texto dentro do input */
         }
         
-        .horario-inputs .modern-input.compact {
-            width: 100%;
-            margin: 0;
+        .horario-inputs input[type="time"]:focus {
+            border-color: #007bff;
+            outline: none;
         }
         
-        .horario-inputs .modern-input.compact input {
-            width: 100%;
-            box-sizing: border-box;
+        .horario-separador {
+            text-align: center;
+            color: #6c757d;
+            font-size: 14px;
         }
         
         .toggle-switch input:checked ~ .horario-content {
@@ -301,13 +343,53 @@ try {
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra suave */
             z-index: 1000; /* Garante que a mensagem fique acima de outros elementos */
         }
+        
+        .clinica-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+        }
+        
+        .clinica-header h3 {
+            margin: 0;
+            flex-grow: 1;
+        }
+        
+        .btn-logout {
+            position: fixed;
+            right: 20px;
+            top: 20px;
+            background-color: #dc3545;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: none;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-block;
+            width: auto;
+            z-index: 1000;
+        }
+
+        .btn-logout:hover {
+            background-color: #c82333;
+        }
     </style>
 </head>
 <body>
     <div class="main-container">
         <?php include '../../includes/menu_lateral.php'; ?>
         <main class="content">
-            <h1>Configuração da Clínica</h1>
+            <!-- Botão de Sair -->
+            <div class="logout-button" style="position: absolute; top: 20px; right: 20px;">
+                <form id="logoutForm" action="../../pages/logout.php" method="post">
+                    <button type="submit" class="btn-logout" style="background-color: #dc3545;">
+                        <i class="fas fa-sign-out-alt"></i> Sair
+                    </button>
+                </form>
+            </div>
             
             <?php if (isset($_SESSION['success'])): ?>
                 <div class="alert success">
@@ -323,15 +405,16 @@ try {
                 </div>
             <?php endif; ?>
 
-            <div class="form-container card animate__animated animate__fadeInUp">
+            <div class="configuracao-form">
+                <h1>Configuração da Clínica</h1>
                 <form method="POST" action="">
+                    <!-- Nome da Clínica -->
                     <div class="form-group">
                         <label for="nome_clinica">Nome da Clínica:</label>
-                        <div class="modern-input">
-                            <i class="fas fa-hospital input-icon"></i>
-                            <input type="text" name="nome_clinica" id="nome_clinica" required placeholder="Digite o nome da clínica">
-                        </div>
+                        <input type="text" name="nome_clinica" id="nome_clinica" required placeholder="Digite o nome da clínica">
                     </div>
+
+                    <!-- Horário de Funcionamento -->
                     <div class="form-group">
                         <label>Horário de Funcionamento:</label>
                         <div class="dias-container">
@@ -349,25 +432,33 @@ try {
                                     </div>
                                     <div class="horario-content">
                                         <div class="horario-inputs">
-                                            <div class="modern-input compact">
-                                                <i class="fas fa-clock input-icon"></i>
-                                                <input type="time" name="horario_abertura_<?= strtolower($dia) ?>" class="horario-abertura" value="">
-                                            </div>
+                                            <input type="time" name="horario_abertura_<?= strtolower($dia) ?>" class="horario-abertura" value="">
                                             <span class="horario-separador">-</span>
-                                            <div class="modern-input compact">
-                                                <i class="fas fa-clock input-icon"></i>
-                                                <input type="time" name="horario_fechamento_<?= strtolower($dia) ?>" class="horario-fechamento" value="">
-                                            </div>
+                                            <input type="time" name="horario_fechamento_<?= strtolower($dia) ?>" class="horario-fechamento" value="">
                                         </div>
                                     </div>
                                 </div>
                             <?php endforeach; ?>
                         </div>
                     </div>
-                    <button type="submit" class="btn-primary btn-animate">
-                        <span>Salvar Configurações</span>
-                        <i class="fas fa-save"></i>
-                    </button>
+
+                    <!-- Especialidades Atendidas -->
+                    <div class="form-group">
+                        <label>Especialidades Atendidas:</label>
+                        <div class="especialidades-container">
+                            <?php foreach ($especialidades_disponiveis as $especialidade): ?>
+                                <div class="especialidade-item">
+                                    <label>
+                                        <input type="checkbox" name="especialidades[]" value="<?= $especialidade ?>">
+                                        <?= $especialidade ?>
+                                    </label>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+
+                    <!-- Botão de Salvar -->
+                    <button type="submit" class="btn-primary">Salvar Configurações</button>
                 </form>
             </div>
 
@@ -378,23 +469,39 @@ try {
                 <?php else: ?>
                     <?php foreach ($clinicas as $clinica): ?>
                         <div class="clinica-card">
-                            <h3><?= htmlspecialchars($clinica['nome']) ?></h3>
-                            <?php
-                            $dias_semana = ['seg', 'ter', 'qua', 'qui', 'sex', 'sab', 'dom'];
-                            foreach ($dias_semana as $dia): 
-                                $horario_abertura = $clinica["horario_abertura_$dia"] ?? null;
-                                $horario_fechamento = $clinica["horario_fechamento_$dia"] ?? null;
-                                if ($horario_abertura && $horario_fechamento && $horario_abertura != '00:00:00' && $horario_fechamento != '00:00:00'): ?>
-                                    <p><strong><?= ucfirst($dia) ?>:</strong> <?= htmlspecialchars($horario_abertura) ?> às <?= htmlspecialchars($horario_fechamento) ?></p>
-                                <?php endif;
-                            endforeach; ?>
-                            <div class="actions">
-                                <a href="editar_clinica.php?id=<?= $clinica['id'] ?>" class="btn-edit">
-                                    <i class="fas fa-edit"></i> Editar
-                                </a>
-                                <a href="excluir_clinica.php?id=<?= $clinica['id'] ?>" class="btn-delete" onclick="return confirm('Tem certeza que deseja excluir esta clínica?')">
-                                    <i class="fas fa-trash"></i> Excluir
-                                </a>
+                            <div class="clinica-header">
+                                <h3><?= htmlspecialchars($clinica['nome']) ?></h3>
+                                <div class="actions">
+                                    <a href="editar_clinica.php?id=<?= $clinica['id'] ?>" class="btn-edit">
+                                        <i class="fas fa-edit"></i> Editar
+                                    </a>
+                                    <a href="excluir_clinica.php?id=<?= $clinica['id'] ?>" class="btn-delete">
+                                        <i class="fas fa-trash"></i> Excluir
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="clinica-details">
+                                <p><strong>Horário de Funcionamento:</strong></p>
+                                <?php
+                                $dias_semana = [
+                                    'seg' => 'Segunda',
+                                    'ter' => 'Terça',
+                                    'qua' => 'Quarta',
+                                    'qui' => 'Quinta',
+                                    'sex' => 'Sexta',
+                                    'sab' => 'Sábado',
+                                    'dom' => 'Domingo'
+                                ];
+                                
+                                foreach ($dias_semana as $dia => $dia_nome) {
+                                    $abertura = $clinica["horario_abertura_$dia"];
+                                    $fechamento = $clinica["horario_fechamento_$dia"];
+                                    
+                                    if ($abertura != '00:00:00' && $fechamento != '00:00:00') {
+                                        echo "<p>{$dia_nome}: {$abertura} - {$fechamento}</p>";
+                                    }
+                                }
+                                ?>
                             </div>
                         </div>
                     <?php endforeach; ?>
@@ -402,65 +509,55 @@ try {
             </div>
         </main>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        // Atualizar a página após cadastro bem-sucedido
-        <?php if (isset($_SESSION['success'])): ?>
-            setTimeout(function() {
-                window.location.reload();
-            }, 2000);
-        <?php endif; ?>
-        
-        // Função para mostrar/esconder horários ao alternar o toggle
-        function toggleHorario(checkbox) {
-            const horarioContent = checkbox.closest('.dia-item').querySelector('.horario-content');
-            if (checkbox.checked) {
-                horarioContent.style.display = 'block';
-            } else {
-                horarioContent.style.display = 'none';
-            }
-        }
-        
-        // Adiciona o evento de change a todos os toggles
-        document.querySelectorAll('.toggle-switch input').forEach(checkbox => {
-            checkbox.addEventListener('change', function() {
-                toggleHorario(this);
+        document.addEventListener('DOMContentLoaded', function() {
+            const toggles = document.querySelectorAll('.toggle-switch input');
+            
+            // Verifica o estado inicial dos toggles
+            toggles.forEach(toggle => {
+                const horarioContent = toggle.closest('.dia-item').querySelector('.horario-content');
+                if (toggle.checked) {
+                    horarioContent.style.display = 'flex';
+                }
             });
             
-            // Verifica o estado inicial
-            if (checkbox.checked) {
-                checkbox.closest('.dia-item').querySelector('.horario-content').style.display = 'block';
-            }
+            // Adiciona o listener para mudanças
+            toggles.forEach(toggle => {
+                toggle.addEventListener('change', function() {
+                    const horarioContent = this.closest('.dia-item').querySelector('.horario-content');
+                    if (this.checked) {
+                        horarioContent.style.display = 'flex';
+                    } else {
+                        horarioContent.style.display = 'none';
+                    }
+                });
+            });
+
+            // Intercepta todos os cliques em links com a classe btn-delete
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('btn-delete') || e.target.closest('.btn-delete')) {
+                    e.preventDefault();
+                    const deleteLink = e.target.closest('a').href;
+                    
+                    Swal.fire({
+                        title: 'Tem certeza?',
+                        text: "Você não poderá reverter isso!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Sim, excluir!',
+                        cancelButtonText: 'Cancelar'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = deleteLink;
+                        }
+                    });
+                }
+            });
         });
-
-        // Função para remover a mensagem após 5 segundos
-        setTimeout(function() {
-            var successMessage = document.querySelector('.alert.success');
-            if (successMessage) {
-                successMessage.remove();
-            }
-        }, 5000); // 5000 milissegundos = 5 segundos
-
-        // Função para abrir o modal de edição
-        function editarClinica(id, nome, horarioAbertura, horarioFechamento) {
-            document.getElementById('editar_id').value = id;
-            document.getElementById('editar_nome_clinica').value = nome;
-            document.getElementById('editar_horario_abertura').value = horarioAbertura;
-            document.getElementById('editar_horario_fechamento').value = horarioFechamento;
-            document.getElementById('editarClinicaModal').style.display = 'block';
-        }
-
-        // Função para fechar o modal
-        function fecharModal() {
-            document.getElementById('editarClinicaModal').style.display = 'none';
-        }
-
-        // Fechar o modal ao clicar fora dele
-        window.onclick = function(event) {
-            var modal = document.getElementById('editarClinicaModal');
-            if (event.target == modal) {
-                fecharModal();
-            }
-        }
     </script>
 </body>
 </html>

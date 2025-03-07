@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['excluir_usuario'])) {
         header('Location: gerenciar_usuarios.php');
         exit();
     } catch (PDOException $e) {
-        $_SESSION['error'] = "Erro ao desativar usuário: " . $e->getMessage();
+        $_SESSION['error'] = "Erro ao excluir usuário: " . $e->getMessage();
     }
 }
 ?>
@@ -34,15 +34,45 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['excluir_usuario'])) {
 <head>
     <meta charset="UTF-8">
     <title>Gerenciar Usuários</title>
+    <link rel="stylesheet" href="../../assets/css/global.css">
     <link rel="stylesheet" href="../../assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        .btn-sair {
+            position: fixed;
+            right: 20px;
+            top: 20px;
+            background-color: #dc3545;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: none;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-block;
+            width: auto;
+            z-index: 1000;
+        }
+
+        .btn-sair:hover {
+            background-color: #c82333;
+        }
+    </style>
 </head>
 <body>
     <div class="main-container">
         <?php include '../../includes/menu_lateral.php'; ?>
         <main class="content">
-            <h1>Gerenciar Usuários</h1>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h1>Gerenciar Usuários</h1>
+                <form id="logoutForm" action="../../pages/logout.php" method="post" style="margin-left: 20px;">
+                    <button type="submit" class="btn-sair">
+                        <i class="fas fa-sign-out-alt"></i> Sair
+                    </button>
+                </form>
+            </div>
             <a href="configuracao_clinica.php" class="btn-voltar">Voltar</a>
             <a href="criar_perfil.php" class="btn-criar">
                 <i class="fas fa-plus"></i> Criar Novo Perfil
@@ -81,7 +111,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['excluir_usuario'])) {
                                     <form method="post" style="display:inline;" id="formExcluir_<?= $usuario['id'] ?>">
                                         <input type="hidden" name="usuario_id" value="<?= $usuario['id'] ?>">
                                         <input type="hidden" name="excluir_usuario" value="1">
-                                        <button type="button" onclick="confirmarExclusao('<?= $usuario['nome'] ?>', 'formExcluir_<?= $usuario['id'] ?>')" class="btn-excluir">
+                                        <button type="button" onclick="confirmarExclusao('<?= htmlspecialchars($usuario['nome'], ENT_QUOTES, 'UTF-8') ?>', 'formExcluir_<?= $usuario['id'] ?>')" class="btn-excluir">
                                             <i class="fas fa-trash-alt"></i> Excluir
                                         </button>
                                     </form>
@@ -93,37 +123,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['excluir_usuario'])) {
             </table>
         </main>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-    // Função para exibir o modal de confirmação
     function confirmarExclusao(nome, formId) {
-        const modal = document.getElementById('confirmModal');
-        const modalMessage = document.getElementById('modalMessage');
-        const confirmButton = document.getElementById('confirmButton');
-        const cancelButton = document.getElementById('cancelButton');
-
-        // Define a mensagem do modal
-        modalMessage.textContent = `Tem certeza que deseja desativar o usuário "${nome}"?`;
-
-        // Exibe o modal
-        modal.style.display = 'flex';
-
-        // Configura o botão de confirmação
-        confirmButton.onclick = function() {
-            document.getElementById(formId).submit(); // Envia o formulário
-            modal.style.display = 'none'; // Fecha o modal
-        };
-
-        // Configura o botão de cancelar
-        cancelButton.onclick = function() {
-            modal.style.display = 'none'; // Fecha o modal
-        };
-
-        // Fecha o modal ao clicar fora dele
-        modal.onclick = function(event) {
-            if (event.target === modal) {
-                modal.style.display = 'none';
+        Swal.fire({
+            title: 'Confirmação',
+            text: `Tem certeza que deseja excluir o usuário "${nome}"?`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sim, excluir!',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById(formId).submit();
             }
-        };
+        });
     }
 
     // Função para remover a mensagem após 5 segundos
@@ -134,15 +150,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['excluir_usuario'])) {
         }
     }, 5000); // 5000 milissegundos = 5 segundos
     </script>
-    <!-- Modal de confirmação -->
-    <div id="confirmModal" class="modal" style="display: none;">
-        <div class="modal-content">
-            <p id="modalMessage"></p>
-            <div class="modal-buttons">
-                <button id="confirmButton" class="btn-confirm">Confirmar</button>
-                <button id="cancelButton" class="btn-cancel">Cancelar</button>
-            </div>
-        </div>
-    </div>
 </body>
 </html> 

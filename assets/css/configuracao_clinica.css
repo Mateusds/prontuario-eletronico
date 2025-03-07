@@ -1,74 +1,228 @@
-.configuracao-form {
-    max-width: 600px;
+/* Estilos Gerais */
+.configuracao-form, .clinicas-list {
+    max-width: 800px;
     margin: 0 auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
+/* Configuração da Clínica */
 .configuracao-form .form-group {
-    margin-bottom: 20px;
+    margin-bottom: 25px;
 }
 
 .configuracao-form label {
-    font-weight: bold;
+    font-weight: 600;
+    color: #2c3e50;
     display: block;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
 }
 
 .configuracao-form input[type="text"],
 .configuracao-form input[type="time"] {
     width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+    padding: 12px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: border-color 0.3s ease;
+}
+
+.configuracao-form input[type="text"]:focus,
+.configuracao-form input[type="time"]:focus {
+    border-color: #007bff;
+    outline: none;
 }
 
 .configuracao-form button {
     background: #007bff;
     color: white;
     border: none;
-    padding: 10px 20px;
-    border-radius: 4px;
+    padding: 12px 24px;
+    border-radius: 8px;
     cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
 }
 
 .configuracao-form button:hover {
     background: #0056b3;
 }
 
-.dia-horario {
-    display: block;
-    width: 100%;
-    padding: 15px;
-    background-color: #f8f9fa;
-    border-radius: 8px;
-    border: 1px solid #e0e0e0;
-    margin-bottom: 20px;
-    box-sizing: border-box;
+.dias-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
 }
 
-.dia-horario .dia-checkbox {
-    text-align: center;
+.dia-item {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 15px;
+    border: 1px solid #e0e0e0;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.dia-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.dia-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
     margin-bottom: 10px;
 }
 
-.dia-horario .dia-checkbox label {
+.dia-header label {
     font-weight: 600;
     color: #2c3e50;
-    font-size: 16px;
+    cursor: pointer;
 }
 
-.dia-horario .horario-inputs {
+.horario-content {
     display: flex;
-    flex-direction: column;
+    justify-content: center;
     align-items: center;
-    gap: 5px;
-    width: fit-content;
-    margin: 0 auto;
+    margin-top: 10px;
+    width: 100%;
+}
+
+.toggle-switch input:checked ~ .horario-content {
+    display: block;
+}
+
+.horario-inputs {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: center;
+}
+
+.horario-inputs input[type="text"] {
+    width: 80%;
+    text-align: center;
+    padding: 8px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: border-color 0.3s ease;
+}
+
+.horario-inputs input[type="text"]:focus {
+    border-color: #007bff;
+    outline: none;
 }
 
 .horario-separador {
     color: #6c757d;
     font-size: 14px;
-    margin: 0;
+}
+
+.horario-inputs input[type="time"] {
+    width: 100px;
+    padding: 8px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: border-color 0.3s ease;
     text-align: center;
-    width: 100%;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+.horario-inputs input[type="time"]::-webkit-calendar-picker-indicator {
+    display: none;
+}
+
+.horario-inputs input[type="time"]::-moz-calendar-picker-indicator {
+    display: none;
+}
+
+/* Clínicas Cadastradas */
+.clinicas-list h2 {
+    font-size: 24px;
+    color: #2c3e50;
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: 600;
+}
+
+.clinica-card {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 15px;
+    border: 1px solid #e0e0e0;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.clinica-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.clinica-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.clinica-header h3 {
+    font-size: 20px;
+    color: #007bff;
+    margin: 0;
+}
+
+.clinica-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-edit, .btn-delete {
+    padding: 8px 12px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-edit {
+    background-color: #28a745;
+    color: white;
+}
+
+.btn-edit:hover {
+    background-color: #218838;
+}
+
+.btn-delete {
+    background-color: #dc3545;
+    color: white;
+}
+
+.btn-delete:hover {
+    background-color: #c82333;
+}
+
+.clinica-details {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.clinica-details p {
+    margin: 0;
+    font-size: 14px;
+    color: #495057;
+}
+
+.clinica-details p strong {
+    color: #2c3e50;
 } 

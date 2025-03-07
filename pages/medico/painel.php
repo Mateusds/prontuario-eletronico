@@ -21,6 +21,27 @@ $paciente = $stmt->fetch();
     <link rel="stylesheet" href="../../assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
+        .btn-sair {
+            position: fixed;
+            right: 20px;
+            top: 20px;
+            background-color: #dc3545;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: none;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-block;
+            width: auto;
+            z-index: 1000;
+        }
+
+        .btn-sair:hover {
+            background-color: #c82333;
+        }
+
         .painel-container {
             text-align: center;
             padding: 50px;
@@ -43,7 +64,14 @@ $paciente = $stmt->fetch();
     <div class="main-container">
         <?php include '../../includes/menu_lateral.php'; ?>
         <main class="content">
-            <h1>Painel de Chamadas</h1>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h1>Painel de Chamadas</h1>
+                <form id="logoutForm" action="../../pages/logout.php" method="post">
+                    <button type="submit" class="btn-sair">
+                        <i class="fas fa-sign-out-alt"></i> Sair
+                    </button>
+                </form>
+            </div>
             <a href="../medico/medico.php" class="btn-voltar">Voltar</a>
             
             <?php if ($paciente): ?>

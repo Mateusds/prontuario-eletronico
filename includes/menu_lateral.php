@@ -3,6 +3,41 @@
 $current_path = $_SERVER['PHP_SELF'];
 ?>
 
+<style>
+    /* Animação de rolar (para a engrenagem) */
+    @keyframes rolar {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    /* Animação de pulsar (para outros ícones) */
+    @keyframes pulsar {
+        0% {
+            transform: scale(1);
+        }
+        50% {
+            transform: scale(1.1);
+        }
+        100% {
+            transform: scale(1);
+        }
+    }
+
+    /* Aplicar animação de rolar à engrenagem quando o link estiver em hover */
+    .sidebar ul li a:hover i.fa-cog {
+        animation: rolar 1s linear infinite;
+    }
+
+    /* Aplicar animação de pulsar aos outros ícones quando o link estiver em hover */
+    .sidebar ul li a:hover i:not(.fa-cog) {
+        animation: pulsar 1s ease-in-out infinite;
+    }
+</style>
+
 <aside class="sidebar">
     <h2>PRONTUÁRIO ELETRÔNICO</h2>
     <ul>
@@ -18,8 +53,13 @@ $current_path = $_SERVER['PHP_SELF'];
                 </a>
             </li>
             <li>
-                <a href="relatorios.php" class="<?= (strpos($current_path, 'relatorios.php') !== false) ? 'active' : '' ?>">
-                    <i class="fas fa-chart-line"></i> Relatórios
+                <a href="../medico/cadastro_medico.php" class="<?= (strpos($current_path, 'medico/cadastro_medico.php') !== false) ? 'active' : '' ?>">
+                    <i class="fas fa-user-plus"></i> Cadastrar Médico
+                </a>
+            </li>
+            <li>
+                <a href="../admin/relatorios.php" class="<?= (strpos($current_path, 'admin/relatorios.php') !== false) ? 'active' : '' ?>">
+                    <i class="fas fa-chart-bar"></i> Relatórios
                 </a>
             </li>
         <?php endif; ?>
@@ -28,6 +68,21 @@ $current_path = $_SERVER['PHP_SELF'];
             <li>
                 <a href="../medico/agenda.php" class="<?= (strpos($current_path, 'medico/agenda.php') !== false) ? 'active' : '' ?>">
                     <i class="fas fa-calendar-alt"></i> Agenda Médica
+                </a>
+            </li>
+            <li>
+                <a href="../medico/agendamentos_realizados.php" class="<?= (strpos($current_path, 'medico/agendamentos_realizados.php') !== false) ? 'active' : '' ?>">
+                    <i class="fas fa-list-check"></i> Agendamentos Realizados
+                </a>
+            </li>
+            <li>
+                <a href="../medico/gerar_guia.php" class="<?= (strpos($current_path, 'medico/gerar_guia.php') !== false) ? 'active' : '' ?>">
+                    <i class="fas fa-file-medical"></i> Gerar Guia
+                </a>
+            </li>
+            <li>
+                <a href="../atendente/consultar_guias.php" class="<?= (strpos($current_path, 'atendente/consultar_guias.php') !== false) ? 'active' : '' ?>">
+                    <i class="fas fa-search"></i> Consultar Guias Emitidas
                 </a>
             </li>
             <li>
@@ -57,6 +112,11 @@ $current_path = $_SERVER['PHP_SELF'];
 
         <?php if ($_SESSION['user_type'] == 'paciente' || $_SESSION['user_type'] == 'admin'): ?>
             <li>
+                <a href="../paciente/cadastro.php" class="<?= (strpos($current_path, 'paciente/cadastro.php') !== false) ? 'active' : '' ?>">
+                    <i class="fas fa-user-plus"></i> Cadastro de Paciente
+                </a>
+            </li>
+            <li>
                 <a href="../paciente/consultas.php" class="<?= (strpos($current_path, 'paciente/consultas.php') !== false) ? 'active' : '' ?>">
                     <i class="fas fa-stethoscope"></i> Consultas de Pacientes
                 </a>
@@ -83,4 +143,13 @@ $current_path = $_SERVER['PHP_SELF'];
             </li>
         <?php endif; ?>
     </ul>
+    <script>
+        // Adiciona um evento específico para o formulário de logout
+        document.getElementById('logoutForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Evita o comportamento padrão do formulário
+            if (confirm('Tem certeza que deseja sair?')) {
+                window.location.href = '../includes/logout.php'; // Redireciona para logout.php
+            }
+        });
+    </script>
 </aside> 

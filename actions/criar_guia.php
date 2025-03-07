@@ -1,0 +1,6 @@
+// ... existing code ...
+date_default_timezone_set('America/Sao_Paulo'); // Define o fuso horário para São Paulo
+$dataEmissao = date('Y-m-d H:i:s'); // Isso pega a data e hora atuais
+$stmt = $pdo->prepare("INSERT INTO guias (numero_guia, data_emissao, ...) VALUES (:numero_guia, :data_emissao, ...)");
+$stmt->bindParam(':data_emissao', $dataEmissao);
+// ... existing code ...

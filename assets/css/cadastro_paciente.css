@@ -1,0 +1,276 @@
+/* Estilos gerais */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f7f6;
+    margin: 0;
+    padding: 0;
+}
+
+/* Container principal */
+.cadastro-container {
+    background-color: #ffffff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* Título da página */
+.cadastro-container h1 {
+    color: #2c3e50;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-size: 2rem;
+}
+
+/* Grupos de formulário */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #34495e;
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background-color: #f9f9f9;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: #3498db;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.1);
+}
+
+/* Layout de duas colunas */
+.form-columns {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Campos que ocupam duas colunas */
+.form-group.full-width {
+    grid-column: span 2;
+}
+
+/* Grupo específico para CEP */
+.cep-group {
+    display: flex;
+    align-items: flex-end;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.cep-group .form-group {
+    flex: 1;
+}
+
+/* Campos específicos com largura reduzida */
+.form-group input[type="date"],
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="tel"] {
+    width: 80%;
+    padding: 0.6rem;
+    font-size: 0.9rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+    transition: all 0.3s ease;
+}
+
+/* Campo CPF com largura específica */
+.form-group input[type="text"][name="cpf"] {
+    width: 160px; /* Largura fixa para acomodar "111.039.024-66" */
+    padding: 0.6rem;
+    font-size: 0.9rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+    transition: all 0.3s ease;
+}
+
+/* Campo de data com largura específica */
+.form-group input[type="date"] {
+    width: 120px; /* Largura fixa para acomodar "xx/xx/xxxx" */
+    padding: 0.6rem;
+    font-size: 0.9rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+    transition: all 0.3s ease;
+}
+
+/* Campo de número com largura específica */
+.form-group input[type="text"][name="numero"] {
+    width: 100px; /* Largura fixa para acomodar "0000000" */
+    padding: 0.6rem;
+    font-size: 0.9rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+    transition: all 0.3s ease;
+}
+
+/* Campo de telefone com largura específica */
+.form-group input[type="tel"] {
+    width: 150px; /* Largura fixa para acomodar "(82) 98805-9412" */
+    padding: 0.6rem;
+    font-size: 0.9rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+    transition: all 0.3s ease;
+}
+
+/* Campo de CEP com largura específica */
+.form-group input[type="text"][name="cep"] {
+    width: 100px; /* Largura fixa para acomodar "57043-000" */
+    padding: 0.6rem;
+    font-size: 0.9rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+    transition: all 0.3s ease;
+}
+
+/* Campo de bairro com largura específica */
+.form-group input[type="text"][name="bairro"] {
+    width: 120px; /* Largura fixa para acomodar "00000000000000" */
+    padding: 0.6rem;
+    font-size: 0.9rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+    transition: all 0.3s ease;
+}
+
+/* Campo de cidade com largura específica */
+.form-group input[type="text"][name="cidade"] {
+    width: 200px; /* Largura fixa para acomodar "0000000000000" */
+    padding: 0.6rem;
+    font-size: 0.9rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+    transition: all 0.3s ease;
+}
+
+/* Campo de estado com largura específica */
+.form-group input[type="text"][name="estado"] {
+    width: 200px; /* Largura fixa para acomodar "0000000000000" */
+    padding: 0.6rem;
+    font-size: 0.9rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+    transition: all 0.3s ease;
+}
+
+/* Botão de cadastro */
+.btn-cadastrar {
+    grid-column: span 2;
+    margin: 1.5rem auto 0;
+    width: 100%;
+    max-width: 350px;
+    padding: 0.8rem;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: block;
+}
+
+.btn-cadastrar:hover {
+    background-color: #2980b9;
+}
+
+/* Botão de buscar CEP */
+.btn-buscar-cep {
+    background-color: #27ae60;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 0.5rem 1rem;
+    margin-left: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 0.8rem;
+    width: auto;
+}
+
+.btn-buscar-cep:hover {
+    background-color: #219653;
+}
+
+/* Grupo de botões */
+.button-group {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+/* Mensagens de erro/sucesso */
+.alert {
+    padding: 0.75rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.alert.success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.alert.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+/* Link de voltar */
+.link-voltar {
+    display: block;
+    text-align: center;
+    margin-top: 1rem;
+    color: #3498db;
+    text-decoration: none;
+}
+
+.link-voltar:hover {
+    text-decoration: underline;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .form-columns {
+        grid-template-columns: 1fr;
+    }
+    
+    .form-group.full-width,
+    .btn-cadastrar {
+        grid-column: span 1;
+    }
+} 

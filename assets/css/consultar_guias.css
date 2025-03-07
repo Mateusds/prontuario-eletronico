@@ -1,0 +1,161 @@
+/* Estilos gerais */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f5f6fa;
+    color: #2c3e50;
+    margin: 0;
+    padding: 0;
+}
+
+.main-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+.content {
+    flex: 1;
+    padding: 20px;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start; /* Alinha o conteúdo no topo */
+    padding-top: 40px; /* Reduz o espaço acima do conteúdo */
+}
+
+h1 {
+    color: #34495e;
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Card principal */
+.card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    width: 100%;
+    max-width: 1200px;
+}
+
+.card-header {
+    padding: 15px;
+    border-bottom: 1px solid #ecf0f1;
+    text-align: center;
+}
+
+.card-header h3 {
+    margin: 0;
+    font-size: 18px;
+    color: #2c3e50;
+}
+
+.card-body {
+    padding: 15px;
+}
+
+/* Tabela de guias */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 auto;
+}
+
+.table th,
+.table td {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #ecf0f1;
+}
+
+.table th {
+    background-color: #34495e;
+    color: #fff;
+    font-weight: 600;
+}
+
+.table tr:hover {
+    background-color: #f8f9fa;
+}
+
+/* Botões de ação */
+.btn {
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 14px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary {
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    width: 80px;
+}
+
+.btn-primary:hover {
+    background-color: #2980b9;
+}
+
+.btn-sm {
+    padding: 4px 6px;
+    font-size: 12px;
+    min-width: 20px;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    width: 60px;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+}
+
+/* Mensagem de nenhuma guia encontrada */
+.text-center {
+    text-align: center;
+    color: #7f8c8d;
+    padding: 20px;
+}
+
+.btn-group {
+    display: flex;
+    gap: 5px;
+    justify-content: center; /* Centraliza os botões horizontalmente */
+}
+
+.header-guias {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.btn-sair-container {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.btn-sair {
+    background-color: #dc3545;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-sair:hover {
+    background-color: #c82333;
+} 

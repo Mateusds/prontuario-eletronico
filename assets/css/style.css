@@ -108,8 +108,14 @@ button:hover {
 }
 
 .alert.success {
-    background: #d4edda;
+    background-color: #d4edda;
     color: #155724;
+    padding: 15px;
+    border-radius: 4px;
+    margin: 20px auto;
+    text-align: center;
+    width: 50%;
+    display: block;
 }
 
 .alert.error {
@@ -416,45 +422,51 @@ textarea {
 }
 
 .btn-editar, .btn-excluir {
-    padding: 10px 15px;
     border: none;
-    border-radius: 5px;
+    background: none;
+    padding: 2px;
+    margin: 0 1px;
     cursor: pointer;
-    font-size: 14px;
-    transition: background-color 0.3s ease;
-    display: inline-block;
-    text-decoration: none;
-    width: 120px;
-    text-align: center;
-    box-sizing: border-box;
+    transition: all 0.3s ease;
+    font-size: 12px;
 }
 
 .btn-editar {
-    background: #28a745;
+    background-color: #4CAF50; /* Verde */
     color: white;
-}
-
-.btn-editar:hover {
-    background: #218838;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 14px;
+    transition: background-color 0.3s;
+    margin-right: 5px;
 }
 
 .btn-excluir {
-    background: #dc3545;
+    background-color: #f44336; /* Vermelho */
     color: white;
-    margin-left: 10px;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.btn-editar:hover {
+    background-color: #45a049;
 }
 
 .btn-excluir:hover {
-    background: #c82333;
+    background-color: #d32f2f;
 }
 
-.btn-editar:active, .btn-excluir:active {
-    transform: translateY(0);
-    box-shadow: none;
-}
-
-.btn-editar i, .btn-excluir i {
-    margin-right: 5px;
+.button-group {
+    display: flex;
+    justify-content: flex-start;
+    gap: 5px;
 }
 
 .relatorio-section {
@@ -501,18 +513,19 @@ textarea {
 }
 
 .btn-sair {
-    background-color: #dc3545; /* Vermelho */
+    background-color: #dc3545;
     color: white;
-    padding: 10px 15px;
-    border-radius: 5px;
+    padding: 8px 16px;
+    border-radius: 4px;
     text-decoration: none;
+    transition: background-color 0.3s;
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 8px;
 }
 
 .btn-sair:hover {
-    background-color: #c82333; /* Vermelho mais escuro ao passar o mouse */
+    background-color: #c82333;
 }
 
 .header {
@@ -522,37 +535,20 @@ textarea {
     padding: 20px;
 }
 
-.btn-sair {
-    background-color: #dc3545;
-    color: white;
-    padding: 8px 16px;
-    border-radius: 4px;
-    text-decoration: none;
-    transition: background-color 0.3s;
-}
-
-.btn-sair:hover {
-    background-color: #c82333;
-}
-
 .btn-criar {
-    background-color: #28a745; /* Verde */
-    color: white;
-    padding: 8px 16px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    text-align: center;
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    font-size: 14px;
-    transition: background-color 0.3s;
-    margin-left: auto; /* Move o botão para o lado direito */
+    text-decoration: none; /* Remove o sublinhado */
+    color: inherit; /* Mantém a cor do texto */
+    display: inline-block; /* Mantém o layout */
+    padding: 9.4px 12px; /* Espaçamento consistente */
+    border-radius: 4px; /* Bordas arredondadas */
+    background-color: #007bff; /* Cor de fundo azul */
+    color: white; /* Cor do texto */
+    transition: background-color 0.3s; /* Transição suave */
 }
 
 .btn-criar:hover {
-    background-color: #218838; /* Verde mais escuro */
+    background-color: #06b300; /* Cor de fundo ao passar o mouse */
+    text-decoration: none; /* Garante que não apareça sublinhado ao passar o mouse */
 }
 
 .btn-criar i {
@@ -1033,5 +1029,96 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 
 .sidebar a.active i {
     color: white;
+}
+
+.form-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+    justify-content: center;
+}
+
+.btn-primary, .btn-secondary {
+    padding: 10px 20px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    width: 180px;
+    text-align: center;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+.tabela-medicos tbody tr {
+    border-bottom: 1px solid #e9ecef;
+}
+
+.tabela-medicos tbody tr:hover {
+    background-color: #f8f9fa;
+}
+
+.tabela-medicos tbody td {
+    padding: 12px;
+    vertical-align: middle;
+}
+
+.btn-logout {
+    background-color: #dc3545; /* Vermelho mais intenso */
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-logout:hover {
+    background-color: #c82333; /* Vermelho mais escuro no hover */
+}
+
+.logout-button {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.header-relatorios {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.btn-sair {
+    background-color: #dc3545;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-sair:hover {
+    background-color: #c82333;
 }
 

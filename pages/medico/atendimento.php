@@ -62,5 +62,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['chamar_paciente'])) {
             </div>
         </main>
     </div>
+    <script>
+        function sair() {
+            Swal.fire({
+                title: 'Tem certeza?',
+                text: "Você será desconectado do sistema!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sim, sair!',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = '../../pages/logout.php';
+                }
+            });
+        }
+    </script>
 </body>
 </html>

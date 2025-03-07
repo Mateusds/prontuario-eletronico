@@ -35,11 +35,16 @@ try {
     exit();
 }
 
+// Buscar especialidades da clínica
+$especialidades_clinica = $pdo->query("SELECT especialidade FROM clinica_especialidades WHERE clinica_id = $id")
+    ->fetchAll(PDO::FETCH_COLUMN);
+
 // Processar o formulário de edição
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $nome_clinica = $_POST['nome_clinica'] ?? '';
     $horario_abertura = $_POST['horario_abertura'] ?? '';
     $horario_fechamento = $_POST['horario_fechamento'] ?? '';
+    $especialidades = $_POST['especialidades'] ?? [];
 
     // Processar horários por dia
     $dias_semana = ['seg', 'ter', 'qua', 'qui', 'sex', 'sab', 'dom'];
@@ -82,6 +87,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
         $stmt->execute($params);
+
+        // Atualizar especialidades
+        $pdo->prepare("DELETE FROM clinica_especialidades WHERE clinica_id = ?")->execute([$id]);
+        
+        $stmt = $pdo->prepare("INSERT INTO clinica_especialidades (clinica_id, especialidade) VALUES (?, ?)");
+        foreach ($especialidades as $especialidade) {
+            $stmt->execute([$id, $especialidade]);
+        }
 
         $pdo->commit();
         $_SESSION['success'] = "Clínica e horários atualizados com sucesso!";
@@ -133,32 +146,140 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $fechamento = $clinica['horario_fechamento_'.$dia] ?? null;
                 ?>
                     <div class="dia-horario">
-                        <div class="dia-checkbox">
-                            <label><?= $label ?></label>
+                        <div class="dia-header" onclick="toggleHorario('<?= $dia ?>')">
+                            <span><?= $label ?></span>
+                            <span class="seta" id="seta-<?= $dia ?>">▼</span>
                         </div>
-                        <div class="horario-inputs">
-                            <div class="modern-input">
-                                <input type="time" 
-                                       id="<?= $dia ?>_abertura" 
-                                       name="<?= $dia ?>_abertura" 
-                                       value="<?= $abertura ? htmlspecialchars($abertura) : '' ?>">
-                                <span class="input-icon">⏰</span>
-                            </div>
-                            <span class="horario-separador">às</span>
-                            <div class="modern-input">
-                                <input type="time" 
-                                       id="<?= $dia ?>_fechamento" 
-                                       name="<?= $dia ?>_fechamento" 
-                                       value="<?= $fechamento ? htmlspecialchars($fechamento) : '' ?>">
-                                <span class="input-icon">⏰</span>
+                        <div class="horario-content" id="horario-<?= $dia ?>" style="display: none;">
+                            <div class="horario-inputs">
+                                <div class="modern-input">
+                                    <span class="input-icon">⏰</span>
+                                    <input type="time" 
+                                           id="<?= $dia ?>_abertura" 
+                                           name="<?= $dia ?>_abertura" 
+                                           value="<?= $abertura ? htmlspecialchars($abertura) : '' ?>"
+                                           placeholder="Abertura">
+                                </div>
+                                <span class="horario-separador">às</span>
+                                <div class="modern-input">
+                                    <span class="input-icon">⏰</span>
+                                    <input type="time" 
+                                           id="<?= $dia ?>_fechamento" 
+                                           name="<?= $dia ?>_fechamento" 
+                                           value="<?= $fechamento ? htmlspecialchars($fechamento) : '' ?>"
+                                           placeholder="Fechamento">
+                                </div>
                             </div>
                         </div>
                     </div>
                 <?php endforeach; ?>
             </div>
 
-            <button type="submit" class="btn-primary">Salvar Alterações</button>
+            <div class="form-group especialidades-group">
+                <label class="especialidades-label">Especialidades Atendidas:</label>
+                <div class="especialidades-container">
+                    <?php
+                    $especialidades_disponiveis = [
+                        'Acompanhante Terapêutico',
+                        'Fisioterapia',
+                        'Fonoaudiologia',
+                        'Musicoterapia',
+                        'Nutrição',
+                        'Psicólogo',
+                        'Psicomotricista',
+                        'Psicopedagogia',
+                        'Terapia Ocupacional'
+                    ];
+                    
+                    foreach ($especialidades_disponiveis as $especialidade): 
+                        $checked = in_array($especialidade, $especialidades_clinica) ? 'checked' : '';
+                    ?>
+                        <label class="especialidade-item">
+                            <input type="checkbox" name="especialidades[]" value="<?= $especialidade ?>"
+                                <?= $checked ?>>
+                            <?= $especialidade ?>
+                        </label>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button onclick="voltar()" class="btn-voltar">Voltar</button>
+                <button type="submit" class="btn-primary">Salvar Alterações</button>
+            </div>
         </form>
     </div>
+
+    <script>
+    function toggleHorario(dia) {
+        const content = document.getElementById('horario-' + dia);
+        const seta = document.getElementById('seta-' + dia);
+        
+        // Fechar todos os outros horários
+        document.querySelectorAll('.horario-content').forEach(otherContent => {
+            if (otherContent.id !== 'horario-' + dia) {
+                otherContent.style.display = 'none';
+                const otherSeta = document.getElementById('seta-' + otherContent.id.split('-')[1]);
+                if (otherSeta) otherSeta.textContent = '▼';
+            }
+        });
+        
+        // Alternar apenas o horário clicado
+        if (content.style.display === 'none' || content.style.display === '') {
+            content.style.display = 'block';
+            seta.textContent = '▲';
+        } else {
+            content.style.display = 'none';
+            seta.textContent = '▼';
+        }
+    }
+
+    // Esconder todos os horários ao carregar a página
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.horario-content').forEach(content => {
+            content.style.display = 'none';
+        });
+    });
+
+    function voltar() {
+        window.history.back();
+    }
+    </script>
+
+    <style>
+    .especialidades-group {
+        text-align: center;
+        margin: 20px auto;
+        max-width: 800px;
+    }
+
+    .especialidades-label {
+        display: block;
+        font-size: 1.2em;
+        margin-bottom: 15px;
+        font-weight: bold;
+    }
+
+    .especialidades-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: center;
+    }
+
+    .especialidade-item {
+        flex: 1 1 200px;
+        padding: 8px;
+        background-color: #f5f5f5;
+        border-radius: 4px;
+        cursor: pointer;
+        text-align: center;
+        max-width: 220px;
+    }
+
+    .especialidade-item:hover {
+        background-color: #e0e0e0;
+    }
+    </style>
 </body>
 </html> 

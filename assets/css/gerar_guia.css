@@ -1,0 +1,195 @@
+/* Estilos gerais */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f8ff; /* Azul claro */
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+.container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #007bff; /* Azul */
+    margin-bottom: 20px;
+    font-size: 2em;
+}
+
+/* Estilos do formulário */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+label {
+    font-weight: bold;
+    color: #555;
+}
+
+input[type="text"],
+input[type="date"],
+input[type="time"],
+select,
+textarea {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1em;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+/* Estilos do botão */
+button.btn {
+    background-color: #007bff; /* Azul */
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button.btn:hover {
+    background-color: #0056b3; /* Azul mais escuro */
+}
+
+/* Estilos para o campo de busca */
+.btn-buscar {
+    background-color: #28a745; /* Verde */
+    margin-top: 5px;
+}
+
+.btn-buscar:hover {
+    background-color: #218838; /* Verde mais escuro */
+}
+
+/* Estilos para o resultado do paciente */
+.resultado-paciente {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #f8f9fa;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.resultado-paciente p {
+    margin: 0;
+    font-size: 0.9em;
+    color: #333;
+}
+
+.resultado-paciente p strong {
+    color: #007bff; /* Azul */
+}
+
+/* Estilos para o select */
+select {
+    appearance: none;
+    background-color: #fff;
+    background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23007bff' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592c.859 0 1.319 1.013.753 1.658l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 12px;
+}
+
+/* Estilos para mensagens de erro ou sucesso */
+.alert {
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.alert.success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.alert.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+/* Estilos para o layout responsivo */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+
+    h1 {
+        font-size: 1.5em;
+    }
+
+    input[type="text"],
+    input[type="date"],
+    input[type="time"],
+    select,
+    textarea {
+        font-size: 0.9em;
+    }
+
+    button.btn {
+        font-size: 0.9em;
+    }
+}
+
+.error {
+    border: 1px solid red !important;
+}
+
+.btn.voltar {
+    background-color: #6c757d;
+    margin-bottom: 20px;
+}
+
+.btn.voltar:hover {
+    background-color: #5a6268;
+}
+
+.button-group {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    justify-content: center;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.button-group .btn {
+    flex: 1; /* Faz os botões ocuparem o mesmo espaço */
+    min-width: 150px;
+    max-width: 200px; /* Define um limite máximo para evitar que fiquem muito largos */
+    padding: 10px 20px; /* Garante o mesmo padding para ambos */
+    text-align: center; /* Centraliza o texto dentro dos botões */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 45px; /* Define uma altura fixa para ambos os botões */
+    box-sizing: border-box; /* Garante que o padding não afete a altura total */
+    gap: 3px; /* Adiciona espaçamento entre o ícone e o texto */
+} 

@@ -32,11 +32,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Recuperar Senha</title>
-    <link rel="stylesheet" href="../assets/css/style.css">
+    <title>Recuperar Senha - Prontuário Eletrônico</title>
+    <link rel="stylesheet" href="../assets/css/recuperar_senha.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
-    <div class="login-container">
+    <div class="recover-container">
         <h2>Recuperar Senha</h2>
         
         <?php if (isset($_SESSION['success'])): ?>
@@ -49,16 +50,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <?php unset($_SESSION['error']); ?>
         <?php endif; ?>
 
-        <form method="post">
+        <form action="../includes/recuperar_senha.php" method="post">
             <div class="form-group">
                 <label for="email">Email:</label>
                 <input type="email" id="email" name="email" required>
             </div>
-            <button type="submit">Enviar Link de Recuperação</button>
+            <button type="submit">Enviar</button>
         </form>
 
-        <div class="back-to-login">
-            <a href="login.php">Voltar para o Login</a>
+        <div class="forgot-password">
+            <a href="login.php">
+                <i class="fas fa-arrow-left"></i>
+                Voltar para o Login
+            </a>
         </div>
     </div>
 </body>
